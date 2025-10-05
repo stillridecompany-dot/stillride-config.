@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>StillRide – Konfigurátor (v3 mobile)</title>
+<style>
+  :root { --bg:#0f1012; --card:#14161a; --muted:#9aa2ad; --text:#eef1f4; --accent:#00e1a3; --stroke:#2a2e36; --chip:#191c21; }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif}
+  .wrap{max-width:980px;margin:0 auto;padding:16px}
+  h1{font-size:20px;margin:0 0 10px}
+  .card{background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:14px;margin-bottom:14px}
+  h2{font-size:13px;margin:0 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:12px;margin-bottom:8px}
+  .group{display:flex;flex-wrap:wrap;gap:10px}
+  .opt, .chip {display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border:1px solid var(--stroke);border-radius:12px;background:var(--chip);color:var(--text);min-width:150px;text-align:center}
+  .is-active{outline:2px solid var(--accent);box-shadow:0 0 0 2px rgba(0,225,163,.10) inset}
+  input[type="text"], input[type="email"], input[type="tel"], textarea{width:100%;padding:12px 14px;border:1px solid var(--stroke);border-radius:10px;background:#0e0f12;color:var(--text);font-size:16px}
+  textarea{min-height:100px;resize:vertical}
+  .kpi{display:flex;justify-content:space-between;align-items:center;border:1px dashed var(--stroke);padding:10px 12px;border-radius:10px;background:#121317;margin-bottom:8px}
+  .kpi strong{font-size:18px}
+  .cta{display:flex;gap:10px;flex-wrap:wrap}
+  button.action{background:var(--accent);color:#00170f;border:none;border-radius:12px;font-weight:800;letter-spacing:.5px;padding:12px 16px;cursor:pointer}
+  button.ghost{background:transparent;color:#fff;border:1px solid var(--stroke)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>StillRide – Konfigurátor</h1>
+
+  <div class="card">
+    <h2>Typ motorky *</h2>
+    <div class="sub">(Malá: 50–65 ccm = -40 € • Štandardná: 85–450 ccm = 0 €)</div>
+    <div class="group" id="g-motor">
+      <button type="button" class="opt is-active" data-key="motorType" data-value="Štandardná motorka (85–450 ccm)" data-add="0">Štandardná (+0€)</button>
+      <button type="button" class="opt" data-key="motorType" data-value="Malá motorka (50–65 ccm)" data-add="-40">Malá (-40€)</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Model a rok motorky *</h2>
+    <div class="sub">(napr. Honda CRF250 2026)</div>
+    <input id="model" type="text" placeholder="napr. Honda CRF250 2026"/>
+  </div>
+
+  <div class="card">
+    <h2>Opis polepu</h2>
+    <div class="sub">(Napíš čo najpresnejšie predstavu: štýl, farby, meno/číslo, logá...)</div>
+    <textarea id="opis" placeholder="Tvoj opis..."></textarea>
+  </div>
+
+  <div class="card">
+    <h2>Tlač *</h2>
+    <div class="sub">(Základná 0 €, Chróm +50 €, Holochrom +70 €, Neón +70 €)</div>
+    <div class="group" id="g-print">
+      <button type="button" class="chip is-active" data-key="print" data-value="základná" data-add="0">Základná</button>
+      <button type="button" class="chip" data-key="print" data-value="chrómová" data-add="50">Chrómová (+50€)</button>
+      <button type="button" class="chip" data-key="print" data-value="holochrom" data-add="70">Holochrom (+70€)</button>
+      <button type="button" class="chip" data-key="print" data-value="neón" data-add="70">Neón (+70€)</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Laminácia *</h2>
+    <div class="sub">(Lesklá 0 €, Matná 0 €, Trblietky +20 €, Prizm +15 €, Asphalt +15 €)</div>
+    <div class="group" id="g-lam">
+      <button type="button" class="chip is-active" data-key="laminacia" data-value="lesklá" data-add="0">Lesklá</button>
+      <button type="button" class="chip" data-key="laminacia" data-value="matná" data-add="0">Matná</button>
+      <button type="button" class="chip" data-key="laminacia" data-value="trblietky" data-add="20">Trblietky (+20€)</button>
+      <button type="button" class="chip" data-key="laminacia" data-value="prizm" data-add="15">Prizm (+15€)</button>
+      <button type="button" class="chip" data-key="laminacia" data-value="asphalt" data-add="15">Asphalt (+15€)</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Minitabuľky</h2>
+    <div class="sub">(Voliteľné: 5 ks +5 €, 10 ks +8 €, 15 ks +12 €)</div>
+    <div class="group" id="g-mini">
+      <button type="button" class="chip is-active" data-key="minitabulky" data-value="0 ks" data-add="0">Nie</button>
+      <button type="button" class="chip" data-key="minitabulky" data-value="5 ks" data-add="5">5 ks (+5€)</button>
+      <button type="button" class="chip" data-key="minitabulky" data-value="10 ks" data-add="8">10 ks (+8€)</button>
+      <button type="button" class="chip" data-key="minitabulky" data-value="15 ks" data-add="12">15 ks (+12€)</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Medzisúčet</h2>
+    <div class="kpi"><div>Base (štandard):</div><strong>€ <span id="priceBase">134.90</span></strong></div>
+    <div class="kpi"><div>Príplatky spolu:</div><strong>€ <span id="priceAdd">0.00</span></strong></div>
+    <div class="kpi"><div>Subtotal:</div><strong>€ <span id="priceTotal">134.90</span></strong></div>
+    <div class="cta">
+      <button type="button" class="action" id="confirm">Potvrdiť konfiguráciu</button>
+      <button type="button" class="ghost" id="copy">Kopírovať sumár</button>
+    </div>
+    <div class="sub" style="margin-top:8px">Po potvrdení ťa presmerujeme späť na produkt s rovnakou cenou a sumárom.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var BASE_PRICE = 134.90;
+  var RETURN_URL = "https://www.stillridecompany.com/custom-kit3";
+
+  function $(id){ return document.getElementById(id); }
+  function $all(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel)); }
+  function fmt(n){ return (Math.round(n*100)/100).toFixed(2); }
+  function esc(s){ return String(s||'').replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]); }); }
+
+  var state = {
+    motorType:{value:"Štandardná motorka (85–450 ccm)", add:0},
+    model:"", opis:"",
+    print:{value:"základná", add:0},
+    laminacia:{value:"lesklá", add:0},
+    minitabulky:{value:"0 ks", add:0}
+  };
+
+  function setActiveInGroup(groupSel, btn){
+    $all(groupSel+" .is-active").forEach(function(n){ n.classList.remove("is-active"); });
+    btn.classList.add("is-active");
+    var key = btn.getAttribute("data-key");
+    state[key] = {
+      value: btn.getAttribute("data-value"),
+      add: Number(btn.getAttribute("data-add")||0)
+    };
+    recompute();
+  }
+
+  function wireGroup(groupId){
+    var box = $(groupId);
+    box.addEventListener("click", function(e){
+      var btn = e.target.closest("button");
+      if(!btn) return;
+      setActiveInGroup("#"+groupId, btn);
+      e.preventDefault();
+      e.stopPropagation();
+    }, false);
+  }
+
+  function recompute(){
+    var add = state.motorType.add + state.print.add + state.laminacia.add + state.minitabulky.add;
+    $("priceBase").textContent = fmt(BASE_PRICE);
+    $("priceAdd").textContent  = fmt(add);
+    $("priceTotal").textContent = fmt(BASE_PRICE + add);
+  }
+
+  // inputs
+  $("model").addEventListener("input", function(e){ state.model = e.target.value; });
+  $("opis").addEventListener("input", function(e){ state.opis = e.target.value; });
+
+  // groups
+  wireGroup("g-motor");
+  wireGroup("g-print");
+  wireGroup("g-lam");
+  wireGroup("g-mini");
+
+  recompute();
+
+  $("copy").addEventListener("click", function(){
+    var total = $("priceTotal").textContent;
+    var txt = [
+      "=== StillRide – Konfigurácia ===",
+      "Finálna cena: € " + total,
+      "Typ: " + state.motorType.value + " (" + (state.motorType.add>=0?'+':'') + state.motorType.add + " €)",
+      "Model/rok: " + (state.model || "-"),
+      "Tlač: " + state.print.value + " (" + (state.print.add>=0?'+':'') + state.print.add + " €)",
+      "Laminácia: " + state.laminacia.value + " (" + (state.laminacia.add>=0?'+':'') + state.laminacia.add + " €)",
+      "Minitabuľky: " + state.minitabulky.value + " (" + (state.minitabulky.add>=0?'+':'') + state.minitabulky.add + " €)"
+    ].join("\n");
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt);
+      alert("Sumár skopírovaný.");
+    } else {
+      alert(txt);
+    }
+  });
+
+  $("confirm").addEventListener("click", function(){
+    if(!state.model || !state.model.trim()){
+      alert("Prosím vyplň model a rok motorky.");
+      return;
+    }
+    var total = $("priceTotal").textContent;
+    var params = new URLSearchParams();
+    params.set("price", total);
+    params.set("typ", state.motorType.value);
+    params.set("model", state.model);
+    params.set("print", state.print.value);
+    params.set("laminacia", state.laminacia.value);
+    params.set("minitabulky", state.minitabulky.value);
+    var note = [
+      "=== StillRide – Konfigurácia ===",
+      "Finálna cena: € " + total,
+      "Typ: " + state.motorType.value + " (" + (state.motorType.add>=0?'+':'') + state.motorType.add + " €)",
+      "Model/rok: " + (state.model || "-"),
+      "Tlač: " + state.print.value + " (" + (state.print.add>=0?'+':'') + state.print.add + " €)",
+      "Laminácia: " + state.laminacia.value + " (" + (state.laminacia.add>=0?'+':'') + state.laminacia.add + " €)",
+      "Minitabuľky: " + state.minitabulky.value + " (" + (state.minitabulky.add>=0?'+':'') + state.minitabulky.add + " €)"
+    ].join("\n");
+    params.set("note", note);
+    location.href = "https://www.stillridecompany.com/custom-kit3?" + params.toString();
+  });
+})();
+</script>
+</body>
+</html>
