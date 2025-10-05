@@ -102,12 +102,31 @@
       <div class="hr"></div>
 
       <h2>Tlač <span class="req">*</span></h2>
-      <div class="group" id="g-print">
-        <button type="button" class="chip is-active" data-key="print" data-value="základná" data-add="0">Základná</button>
-        <button type="button" class="chip" data-key="print" data-value="chrómová" data-add="50">Chrómová (+50€)</button>
-        <button type="button" class="chip" data-key="print" data-value="holochrom" data-add="70">Holochrom (+70€)</button>
-        <button type="button" class="chip" data-key="print" data-value="neón" data-add="70">Neón (+70€)</button>
-      </div>
+<div class="group" id="g-print">
+  <!-- Základná (biela) -->
+  <button type="button" class="chip is-active" data-key="print" data-value="základná" data-add="0">
+    <img alt="" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><rect width='48' height='48' fill='%23ffffff'/><rect width='48' height='48' fill='none' stroke='%23cfcfcf' stroke-width='0.8'/></svg>">
+    Základná
+  </button>
+
+  <!-- Chrómová (kovový prechod) -->
+  <button type="button" class="chip" data-key="print" data-value="chrómová" data-add="50">
+    <img alt="" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><defs><linearGradient id='chrome' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23f8f8f8'/><stop offset='0.25' stop-color='%23bcbcbc'/><stop offset='0.5' stop-color='%23ededed'/><stop offset='0.75' stop-color='%239a9a9a'/><stop offset='1' stop-color='%23dcdcdc'/></linearGradient></defs><rect width='48' height='48' fill='url(%23chrome)'/><rect width='48' height='48' fill='none' stroke='%23888' stroke-width='0.6'/></svg>">
+    Chrómová (+50€)
+  </button>
+
+  <!-- Holochrom (duhový) -->
+  <button type="button" class="chip" data-key="print" data-value="holochrom" data-add="70">
+    <img alt="" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><defs><linearGradient id='holo' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23ffea00'/><stop offset='0.25' stop-color='%23ff58d6'/><stop offset='0.5' stop-color='%2300d2ff'/><stop offset='0.75' stop-color='%2385ff5e'/><stop offset='1' stop-color='%23ffd166'/></linearGradient></defs><rect width='48' height='48' fill='url(%23holo)'/><rect width='48' height='48' fill='none' stroke='%23888' stroke-width='0.6'/></svg>">
+    Holochrom (+70€)
+  </button>
+
+  <!-- Neón (žiarivý) -->
+  <button type="button" class="chip" data-key="print" data-value="neón" data-add="70">
+    <img alt="" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><defs><linearGradient id='neon' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23eaff00'/><stop offset='1' stop-color='%2300ffa3'/></linearGradient></defs><rect width='48' height='48' fill='url(%23neon)'/><rect width='48' height='48' fill='none' stroke='%23888' stroke-width='0.6'/></svg>">
+    Neón (+70€)
+  </button>
+</div>
 
       <div class="hr"></div>
 
