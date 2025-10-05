@@ -6,18 +6,9 @@
 <title>StillRide – Konfigurátor polepov</title>
 <meta name="description" content="StillRide konfigurátor polepov – vyklikaj si typ motorky, tlač, lamináciu, minitabuľky, pridaj opis a kontakt. Hneď uvidíš finálnu cenu.">
 <style>
-  :root {
-    --bg:#0b0c0f;
-    --card:#12141a;
-    --soft:#0f1117;
-    --muted:#9aa2ad;
-    --text:#f1f4f7;
-    --accent:#C6A300;      /* tmavšia žltá (brand) */
-    --accent-ink:#1a1500;
-    --stroke:#232735;
-    --chip:#161922;
-    --glow: 0 0 0 2px rgba(198,163,0,.14), 0 4px 16px rgba(0,0,0,.3);
-  }
+  :root { --bg:#0b0c0f; --card:#12141a; --soft:#0f1117; --muted:#9aa2ad; --text:#f1f4f7;
+          --accent:#C6A300; --accent-ink:#1a1500; --stroke:#232735; --chip:#161922;
+          --glow: 0 0 0 2px rgba(198,163,0,.14), 0 4px 16px rgba(0,0,0,.3); }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0;background:linear-gradient(180deg,#0b0c0f,#0e1015);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
   .wrap{max-width:1024px;margin:0 auto;padding:20px 16px}
@@ -51,8 +42,7 @@
   button.action:active{transform:translateY(1px)}
   button.ghost{background:transparent;color:#fff;border:1px solid var(--stroke);border-radius:12px;padding:12px 14px}
   .hr{height:1px;background:linear-gradient(90deg,transparent,var(--stroke),transparent);margin:14px 0}
-  .req{color:var(--accent)}
-  .tiny{font-size:12px;color:var(--muted)}
+  .req{color:var(--accent)} .tiny{font-size:12px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -69,7 +59,7 @@
   </header>
 
   <div class="grid">
-    <!-- LEFT -->
+    <!-- ĽAVÁ STRANA -->
     <div class="card">
       <h2>Typ motorky <span class="req">*</span></h2>
       <div class="sub">(Štandardná motorka 85–450 ccm = 0 € • Malá motorka 50–60 ccm = −40 €)</div>
@@ -101,35 +91,26 @@
 
       <div class="hr"></div>
 
+      <!-- TLAČ s náhľadmi -->
       <h2>Tlač <span class="req">*</span></h2>
-<div class="group" id="g-print">
-  <!-- Základná (biela) -->
-  <button type="button" class="chip is-active" data-key="print" data-value="základná" data-add="0">
-    <img alt="" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><rect width='48' height='48' fill='%23ffffff'/><rect width='48' height='48' fill='none' stroke='%23cfcfcf' stroke-width='0.8'/></svg>">
-    Základná
-  </button>
-
-  <!-- Chrómová (kovový prechod) -->
-  <button type="button" class="chip" data-key="print" data-value="chrómová" data-add="50">
-    <img alt="" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><defs><linearGradient id='chrome' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23f8f8f8'/><stop offset='0.25' stop-color='%23bcbcbc'/><stop offset='0.5' stop-color='%23ededed'/><stop offset='0.75' stop-color='%239a9a9a'/><stop offset='1' stop-color='%23dcdcdc'/></linearGradient></defs><rect width='48' height='48' fill='url(%23chrome)'/><rect width='48' height='48' fill='none' stroke='%23888' stroke-width='0.6'/></svg>">
-    Chrómová (+50€)
-  </button>
-
-  <!-- Holochrom (duhový) -->
-  <button type="button" class="chip" data-key="print" data-value="holochrom" data-add="70">
-    <img alt="" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><defs><linearGradient id='holo' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23ffea00'/><stop offset='0.25' stop-color='%23ff58d6'/><stop offset='0.5' stop-color='%2300d2ff'/><stop offset='0.75' stop-color='%2385ff5e'/><stop offset='1' stop-color='%23ffd166'/></linearGradient></defs><rect width='48' height='48' fill='url(%23holo)'/><rect width='48' height='48' fill='none' stroke='%23888' stroke-width='0.6'/></svg>">
-    Holochrom (+70€)
-  </button>
-
-  <!-- Neón (žiarivý) -->
-  <button type="button" class="chip" data-key="print" data-value="neón" data-add="70">
-    <img alt="" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><defs><linearGradient id='neon' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23eaff00'/><stop offset='1' stop-color='%2300ffa3'/></linearGradient></defs><rect width='48' height='48' fill='url(%23neon)'/><rect width='48' height='48' fill='none' stroke='%23888' stroke-width='0.6'/></svg>">
-    Neón (+70€)
-  </button>
-</div>
+      <div class="group" id="g-print">
+        <button type="button" class="chip is-active" data-key="print" data-value="základná" data-add="0">
+          <img alt="" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><rect width='48' height='48' fill='%23ffffff'/><rect width='48' height='48' fill='none' stroke='%23cfcfcf' stroke-width='0.8'/></svg>">Základná
+        </button>
+        <button type="button" class="chip" data-key="print" data-value="chrómová" data-add="50">
+          <img alt="" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><defs><linearGradient id='chrome' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23f8f8f8'/><stop offset='0.25' stop-color='%23bcbcbc'/><stop offset='0.5' stop-color='%23ededed'/><stop offset='0.75' stop-color='%239a9a9a'/><stop offset='1' stop-color='%23dcdcdc'/></linearGradient></defs><rect width='48' height='48' fill='url(%23chrome)'/><rect width='48' height='48' fill='none' stroke='%23888' stroke-width='0.6'/></svg>">Chrómová (+50€)
+        </button>
+        <button type="button" class="chip" data-key="print" data-value="holochrom" data-add="70">
+          <img alt="" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><defs><linearGradient id='holo' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23ffea00'/><stop offset='0.25' stop-color='%23ff58d6'/><stop offset='0.5' stop-color='%2300d2ff'/><stop offset='0.75' stop-color='%2385ff5e'/><stop offset='1' stop-color='%23ffd166'/></linearGradient></defs><rect width='48' height='48' fill='url(%23holo)'/><rect width='48' height='48' fill='none' stroke='%23888' stroke-width='0.6'/></svg>">Holochrom (+70€)
+        </button>
+        <button type="button" class="chip" data-key="print" data-value="neón" data-add="70">
+          <img alt="" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><defs><linearGradient id='neon' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23eaff00'/><stop offset='1' stop-color='%2300ffa3'/></linearGradient></defs><rect width='48' height='48' fill='url(%23neon)'/><rect width='48' height='48' fill='none' stroke='%23888' stroke-width='0.6'/></svg>">Neón (+70€)
+        </button>
+      </div>
 
       <div class="hr"></div>
 
+      <!-- LAMINÁCIA s náhľadmi -->
       <h2>Laminácia <span class="req">*</span></h2>
       <div class="group" id="g-lam">
         <button type="button" class="chip is-active" data-key="laminacia" data-value="lesklá" data-add="0">
@@ -160,7 +141,7 @@
       </div>
     </div>
 
-    <!-- RIGHT -->
+    <!-- PRAVÁ STRANA -->
     <div class="right card">
       <h2>Medzisúčet</h2>
       <div class="kpi"><div>Base (štandard):</div><strong>€ <span id="priceBase">134.90</span></strong></div>
@@ -182,7 +163,7 @@
 <script>
 (function(){
   var BASE_PRICE = 134.90;
-  var RETURN_URL = "https://www.stillridecompany.com/custom-kit";
+  var RETURN_URL = "https://www.stillridecompany.com/custom-kit2";
 
   function $(id){ return document.getElementById(id); }
   function $all(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel)); }
@@ -201,10 +182,7 @@
     $all(groupSel+" .is-active").forEach(function(n){ n.classList.remove("is-active"); });
     btn.classList.add("is-active");
     var key = btn.getAttribute("data-key");
-    state[key] = {
-      value: btn.getAttribute("data-value"),
-      add: Number(btn.getAttribute("data-add")||0)
-    };
+    state[key] = { value: btn.getAttribute("data-value"), add: Number(btn.getAttribute("data-add")||0) };
     recompute();
   }
   function wireGroup(groupId){
@@ -213,8 +191,7 @@
       var btn = e.target.closest("button");
       if(!btn) return;
       setActiveInGroup("#"+groupId, btn);
-      e.preventDefault();
-      e.stopPropagation();
+      e.preventDefault(); e.stopPropagation();
     }, false);
   }
 
@@ -227,16 +204,12 @@
 
   // inputs
   $("model").addEventListener("input", function(e){ state.model = e.target.value; });
-  $("opis").addEventListener("input", function(e){ state.opis = e.target.value; });
+  $("opis").addEventListener("input",  function(e){ state.opis  = e.target.value; });
   $("email").addEventListener("input", function(e){ state.email = e.target.value; });
   $("phone").addEventListener("input", function(e){ state.phone = e.target.value; });
 
   // groups
-  wireGroup("g-motor");
-  wireGroup("g-print");
-  wireGroup("g-lam");
-  wireGroup("g-mini");
-
+  wireGroup("g-motor"); wireGroup("g-print"); wireGroup("g-lam"); wireGroup("g-mini");
   recompute();
 
   // Copy summary
@@ -246,35 +219,23 @@
       "=== StillRide – Konfigurácia ===",
       "Finálna cena: € " + total,
       "Typ: " + state.motorType.value + " (" + (state.motorType.add>=0?'+':'') + state.motorType.add + " €)",
-      "Model/rok: " + (state.model || "-"),
+      "Model/rok: " + (state.model || "-") ,
       "Opis: " + (state.opis || "-"),
       "Tlač: " + state.print.value + " (" + (state.print.add>=0?'+':'') + state.print.add + " €)",
       "Laminácia: " + state.laminacia.value + " (" + (state.laminacia.add>=0?'+':'') + state.laminacia.add + " €)",
       "Minitabuľky: " + state.minitabulky.value + " (" + (state.minitabulky.add>=0?'+':'') + state.minitabulky.add + " €)",
       "Kontakt: " + (state.email||"-") + (state.phone?(" / "+state.phone):"")
-    ].join("\\n");
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(txt);
-      alert("Sumár skopírovaný.");
-    } else {
-      alert(txt);
-    }
+    ].join("\n");
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt); alert("Sumár skopírovaný."); }
+    else { alert(txt); }
   });
 
   // Confirm
   $("confirm").addEventListener("click", function(){
-    if(!state.model || !state.model.trim()){
-      alert("Prosím vyplň model a rok motorky.");
-      return;
-    }
-    if(!(state.opis && state.opis.trim())){
-      alert("Prosím vyplň 'Opis polepu' – je povinný.");
-      return;
-    }
-    if(!(state.email && state.email.trim()) && !(state.phone && state.phone.trim())){
-      alert("Prosím zadaj aspoň E-mail alebo Tel.");
-      return;
-    }
+    if(!state.model || !state.model.trim()){ alert("Prosím vyplň model a rok motorky."); return; }
+    if(!(state.opis && state.opis.trim())){ alert("Prosím vyplň 'Opis polepu' – je povinný."); return; }
+    if(!(state.email && state.email.trim()) && !(state.phone && state.phone.trim())){ alert("Prosím zadaj aspoň E-mail alebo Tel."); return; }
+
     var total = $("priceTotal").textContent;
     var params = new URLSearchParams();
     params.set("price", total);
@@ -295,8 +256,9 @@
       "Laminácia: " + state.laminacia.value + " (" + (state.laminacia.add>=0?'+':'') + state.laminacia.add + " €)",
       "Minitabuľky: " + state.minitabulky.value + " (" + (state.minitabulky.add>=0?'+':'') + state.minitabulky.add + " €)",
       "Kontakt: " + (state.email||"-") + (state.phone?(" / "+state.phone):"")
-    ].join("\\n");
+    ].join("\n");
     params.set("note", note);
+
     location.href = RETURN_URL + "?" + params.toString();
   });
 })();
