@@ -59,8 +59,8 @@ textarea{min-height:120px;resize:vertical}
 .toast.show{opacity:1}
 .confetti{pointer-events:none;position:fixed;inset:0}
 /* Splash */
-#sr-splash{position:fixed;inset:0;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;animation: srSplashFade 3s ease forwards}
-#sr-splash img{width:40vw; max-width:500px; height:auto;animation: srLogoZoom 3s ease forwards}
+#sr-splash{position:fixed;inset:0;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;animation: srSplashFade 5s ease forwards}
+#sr-splash img{width:40vw; max-width:500px; height:auto;animation: srLogoZoom 5s ease forwards}
 #sr-splash p{color:#fff;font-size:13px;margin-top:12px;opacity:.75}
 @keyframes srSplashFade{0%{opacity:1}80%{opacity:1}100%{opacity:0;visibility:hidden}}
 @keyframes srLogoZoom{0%{transform:scale(.8);opacity:0}60%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}
@@ -324,7 +324,7 @@ textarea{min-height:120px;resize:vertical}
   }
 
   // copy & toast
-  function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),1400); }
+  function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),3500); }
   function copySummary(){
     const total = $("#priceTotal").textContent;
     const txt = [
@@ -416,7 +416,7 @@ textarea{min-height:120px;resize:vertical}
   $("#confirm_m").addEventListener("click", confirmFlow);
 
   // init
-  document.addEventListener('DOMContentLoaded',()=>{ setTimeout(()=>document.getElementById('sr-splash')?.remove(),1600); });
+  document.addEventListener('DOMContentLoaded',()=>{ setTimeout(()=>document.getElementById('sr-splash')?.remove(),3500); });
   restore(); recompute(); stepHighlight();
   // mini confetti po štarte
   setTimeout(boom, 350);
