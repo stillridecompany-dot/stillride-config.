@@ -19,11 +19,10 @@ html,body{
   font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
   scroll-behavior:smooth;
 }
-a{color:inherit}
 .container{max-width:1200px;margin:0 auto;padding:18px}
 header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:6px 0 18px}
 .logo{display:flex;align-items:center;gap:12px}
-.logo img{height:32px;width:auto;display:block}
+.logo img{height:60px;width:auto;display:block} /* zväčšené logo */
 .title h1{margin:0;font-size:22px}
 .title .sub{color:var(--muted);font-size:12px}
 .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
@@ -52,18 +51,13 @@ h2{font-size:13px;margin:0 0 8px;text-transform:uppercase;letter-spacing:.5px;co
 #g-print .chip:not(.is-active),
 #g-lam .chip:not(.is-active),
 #g-mini .chip:not(.is-active){opacity:.75; background:var(--chip-dim)}
-/* aktívne výrazné + jemný pulz */
+/* aktívne = biele s čiernym textom */
 .is-active{
+  background:#fff;
+  color:#000;
   border-color:var(--accent);
-  box-shadow:0 0 0 2px rgba(198,163,0,.14), 0 8px 22px rgba(0,0,0,.25);
-  opacity:1 !important;
-  position:relative;
+  box-shadow:0 0 0 2px rgba(198,163,0,.2), 0 8px 22px rgba(0,0,0,.25);
 }
-.is-active::after{
-  content:""; position:absolute; inset:-2px; border-radius:12px; pointer-events:none;
-  box-shadow:0 0 0 0 rgba(198,163,0,.25); animation: srPulse .6s ease-out;
-}
-@keyframes srPulse { to { box-shadow:0 0 0 10px rgba(198,163,0,0); } }
 
 .thumb{width:40px;height:40px;border-radius:8px;border:1px solid var(--stroke);background-size:cover;background-position:center}
 input[type="text"],input[type="email"],input[type="tel"],textarea{
@@ -117,7 +111,7 @@ textarea{min-height:120px;resize:vertical}
       <img src="https://raw.githubusercontent.com/stillridecompany-dot/stillride-config./main/StillRide_logo_hore.svg" alt="StillRide logo">
       <div class="title">
         <h1>Konfigurátor polepov</h1>
-        <div class="sub">Vyklikaj si možnosti a hneď uvidíš cenu • autosave • upload</div>
+        <div class="sub">Vyklikaj si možnosti a hneď uvidíš cenu</div>
       </div>
     </div>
   </header>
@@ -237,7 +231,8 @@ textarea{min-height:120px;resize:vertical}
       <div class="desc" style="margin-top:8px">Po potvrdení prebehne kontrola polí. Môžeš skopírovať sumár alebo uložiť rozpracované.</div>
       <div class="actions">
         <button class="btn primary" id="confirm">Potvrdiť konfiguráciu</button>
-        <button class="btn ghost" id="copy">Kopírovať sumár</button>
+        <button class="btn ghost" id="copy">Kopíro
+          vať sumár</button>
         <button class="btn ghost" id="save">Uložiť (lokálne)</button>
         <button class="btn ghost" id="reset">Reset</button>
       </div>
@@ -263,11 +258,11 @@ textarea{min-height:120px;resize:vertical}
 (function(){
   // === CONFIG ===
   const BASE_PRICE = 134.90;
-  const RETURN_URL = "https://www.stillridecompany.com/custom-kit2"; // fallback, keď Stripe nie je pripravený
-  const K = "stillride_cfg_v50";
+  const RETURN_URL = "https://www.stillridecompany.com/custom-kit2"; // fallback keď Stripe nie je pripravený
+  const K = "stillride_cfg_v51";
 
   // === HELPERS ===
-  const $ = sel => document.querySelector(sel);
+  const $  = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
   const fmt = n => (Math.round(n*100)/100).toFixed(2);
 
@@ -282,19 +277,16 @@ textarea{min-height:120px;resize:vertical}
     files:[]
   };
 
-  // Splash remove po 5s
-  document.addEventListener('DOMContentLoaded',()=>{ setTimeout(()=>document.getElementById('sr-splash')?.remove(),5000); });
-
-  // Klikateľný stepper → scroll
+  // === Klikateľný stepper → scroll
   $$(".stepper .step").forEach(s=>{
-    s.addEventListener('click', ()=>{
-      const id = s.getAttribute('data-target');
+    s.addEventListener("click", ()=>{
+      const id = s.getAttribute("data-target");
       const el = id && document.querySelector(id);
       if(el){ el.scrollIntoView({behavior:"smooth", block:"start"}); }
     });
   });
 
-  // Active handling
+  // === Aktívne voľby (biele tlačidlo) ===
   function setActive(btn){
     const group = btn.parentElement;
     group.querySelectorAll('.is-active').forEach(b=>b.classList.remove('is-active'));
@@ -311,13 +303,13 @@ textarea{min-height:120px;resize:vertical}
     });
   });
 
-  // inputs
-  $("#model").addEventListener("input",e=>{ state.model=e.target.value; persist(); stepHighlight(); });
+  // === Inputs ===
+  $("#model").addEventListener("input",e=>{ state.model=e.target.value; persist(); });
   $("#opis").addEventListener("input",e=>{ state.opis=e.target.value; persist(); });
   $("#email").addEventListener("input",e=>{ state.email=e.target.value; persist(); });
   $("#phone").addEventListener("input",e=>{ state.phone=e.target.value; persist(); });
 
-  // upload preview (mená a veľkosti)
+  // === Upload preview (mená a veľkosti) ===
   $("#files").addEventListener("change", (e)=>{
     const out = $("#preview"); out.innerHTML="";
     const files = Array.from(e.target.files||[]);
@@ -331,17 +323,17 @@ textarea{min-height:120px;resize:vertical}
     persist();
   });
 
-  // totals
+  // === Výpočet cien ===
   function recompute(){
     const add = state.motorType.add + state.print.add + state.laminacia.add + state.minitabulky.add;
     $("#priceBase").textContent = fmt(BASE_PRICE);
-    $("#priceAdd").textContent = fmt(add);
+    $("#priceAdd").textContent  = fmt(add);
     const total = BASE_PRICE + add;
-    $("#priceTotal").textContent = fmt(total);
+    $("#priceTotal").textContent   = fmt(total);
     $("#priceTotal_m").textContent = fmt(total);
   }
 
-  // localStorage
+  // === localStorage ===
   function persist(){ try{ localStorage.setItem(K, JSON.stringify(state)); }catch(e){} }
   function restore(){
     try{
@@ -367,18 +359,32 @@ textarea{min-height:120px;resize:vertical}
     }catch(e){}
   }
 
-  // stepper highlight (len vizuálne)
-  function stepHighlight(){
-    const steps = $$(".step");
-    steps.forEach(s=>s.classList.remove("is-on"));
-    let idx = 1;
-    if(state.model?.trim().length>0) idx=2;
-    if(state.opis?.trim().length>0) idx=3;
-    if(true) idx=4;
-    steps[idx-1].classList.add("is-on");
-  }
+  // === Stepper highlight podľa SCROLLU ===
+  const sections = [
+    ["#sec-moto",     0],
+    ["#sec-detail",   1],
+    ["#sec-material", 2],
+    ["#sec-summary",  3],
+  ].map(([sel,idx])=>({el:document.querySelector(sel), idx}));
 
-  // copy & toast
+  const steps = $$(".stepper .step");
+  function setStep(idx){
+    steps.forEach(s=>s.classList.remove("is-on"));
+    if(steps[idx]) steps[idx].classList.add("is-on");
+  }
+  // observer – keď sekcia vojde do view, označí krok
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const found = sections.find(s=>s.el===e.target);
+        if(found) setStep(found.idx);
+      }
+    });
+  }, { rootMargin:"-40% 0px -50% 0px", threshold:[0, .2, .6] });
+
+  sections.forEach(s=>{ if(s.el) io.observe(s.el); });
+
+  // === Copy & toast ===
   function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),1400); }
   function copySummary(){
     const total = $("#priceTotal").textContent;
@@ -398,7 +404,7 @@ textarea{min-height:120px;resize:vertical}
     toast("Skopírované.");
   }
 
-  // confetti mini
+  // === Mini confetti (vizuál) ===
   const fx = $("#fx"), ctx = fx.getContext("2d"); let ps=[];
   function resize(){ fx.width=innerWidth; fx.height=innerHeight; }
   addEventListener('resize',resize); resize();
@@ -414,7 +420,7 @@ textarea{min-height:120px;resize:vertical}
     })();
   }
 
-  // validate
+  // === Validácia ===
   function validate(){
     if(!state.model?.trim()) { alert("Prosím vyplň model a rok."); $("#model").focus(); return false; }
     if(!state.opis?.trim())  { alert("Prosím vyplň 'Opis polepu'."); $("#opis").focus(); return false; }
@@ -422,7 +428,7 @@ textarea{min-height:120px;resize:vertical}
     return true;
   }
 
-  // Stripe helper (ak nie je funkcia, nič sa nestane a padne do fallbacku)
+  // === Stripe helper (ak nie je funkcia, padne do fallbacku) ===
   async function tryStripe(params){
     try{
       const res = await fetch('/.netlify/functions/checkout', {
@@ -435,7 +441,7 @@ textarea{min-height:120px;resize:vertical}
     }catch(e){ return false; }
   }
 
-  // confirm
+  // === Confirm flow ===
   async function confirmFlow(){
     if(!validate()) return;
     boom();
@@ -465,25 +471,32 @@ textarea{min-height:120px;resize:vertical}
     ].join("\n");
     params.set("note", note);
 
-    // 1) skúsiť Stripe
+    // 1) Stripe (ak máš funkciu)
     const ok = await tryStripe(params);
     if(ok) return;
 
-    // 2) fallback: návrat na ER stránku s parametrami (aby si mal všetko v poznámke)
+    // 2) Fallback: návrat na ER s parametrami
     setTimeout(()=>{ location.href = RETURN_URL + "?" + params.toString(); }, 400);
   }
 
-  // controls
+  // === Ovládacie prvky ===
   $("#copy").addEventListener("click", copySummary);
   $("#save").addEventListener("click", ()=>{ try{localStorage.setItem(K, JSON.stringify(state));}catch(e){}; toast("Uložené."); });
   $("#reset").addEventListener("click", ()=>{ localStorage.removeItem(K); location.reload(); });
   $("#confirm").addEventListener("click", confirmFlow);
   $("#confirm_m").addEventListener("click", confirmFlow);
 
-  // init
-  restore(); recompute(); stepHighlight();
+  // === Splash remove po 5s ===
+  document.addEventListener('DOMContentLoaded',()=>{
+    setTimeout(()=>document.getElementById('sr-splash')?.remove(),5000);
+  });
+
+  // === Init ===
+  restore(); recompute();
+  // mini konfety pri štarte
   setTimeout(boom, 350);
 })();
 </script>
 </body>
 </html>
+
