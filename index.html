@@ -4,26 +4,22 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>StillRide – Konfigurátor polepov</title>
-<meta name="description" content="Prémiový konfigurátor StillRide: vyklikaj typ motorky, tlač, lamináciu, minitabuľky, pridaj opis a kontakt. Live cena, autosave, upload.">
 <style>
 :root{
   --bg:#0b0c0f; --panel:#11141a; --panel2:#0e1016; --muted:#9aa2ad; --ink:#f4f6f8;
-  --stroke:#242938; --chip:#171a24; --chip-dim:#0d0f15; --accent:#C6A300; --accent-ink:#1a1500;
-  --ok:#18e299; --err:#ff5263;
+  --stroke:#242938; --chip:#171a24; --chip-dim:#0d0f15;
+  --accent:#C6A300; --accent-ink:#1a1500;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{
-  margin:0;
-  background:radial-gradient(1200px 600px at 10% -10%,#141827,transparent),linear-gradient(#0b0c0f,#0e1116);
-  color:var(--ink);
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  scroll-behavior:smooth;
+  margin:0;background:radial-gradient(1200px 600px at 10% -10%,#141827,transparent),linear-gradient(#0b0c0f,#0e1116);
+  color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;scroll-behavior:smooth;
 }
 .container{max-width:1200px;margin:0 auto;padding:18px}
 header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:6px 0 18px}
 .logo{display:flex;align-items:center;gap:12px}
-.logo img{height:60px;width:auto;display:block} /* zväčšené logo */
-.title h1{margin:0;font-size:22px}
+.logo img{height:60px;width:auto;display:block}
+.title h1{margin:0;font-size:22px;color:var(--accent)}
 .title .sub{color:var(--muted);font-size:12px}
 .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
 @media(max-width:1000px){.grid{grid-template-columns:1fr}}
@@ -31,49 +27,51 @@ header{display:flex;gap:12px;align-items:center;justify-content:space-between;ma
 h2{font-size:13px;margin:0 0 8px;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
 .desc{color:var(--muted);font-size:12px;margin:-4px 0 10px}
 
-/* Stepper */
-.stepper{display:flex;gap:8px;align-items:center;margin:0 0 14px;flex-wrap:wrap}
-.step{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--stroke);border-radius:12px;background:#0e1117;font-size:12px;opacity:.8;cursor:pointer;user-select:none;transition:.18s}
+/* stepper */
+.stepper{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--stroke);
+  border-radius:12px;background:#0e1117;font-size:12px;opacity:.8;cursor:pointer;user-select:none;transition:.18s}
 .step:hover{transform:translateY(-1px)}
 .step.is-on{opacity:1;border-color:var(--accent);box-shadow:0 0 0 2px rgba(198,163,0,.14)}
 
-/* Chips / opt */
+/* chips */
 .row{display:flex;flex-wrap:wrap;gap:12px}
 .chip,.opt{
-  display:inline-flex;align-items:center;gap:10px;justify-content:center;
+  position:relative;display:inline-flex;align-items:center;gap:10px;justify-content:center;
   min-width:170px;padding:14px 16px;border-radius:12px;background:var(--chip);
-  border:1.5px solid var(--stroke);cursor:pointer;
-  transition:transform .12s, box-shadow .18s, border-color .18s, background .18s, color .18s, filter .18s, opacity .18s;
+  border:1.5px solid var(--stroke);cursor:pointer;overflow:hidden;
+  transition:transform .12s, box-shadow .18s, border-color .18s, background .18s, color .18s;
 }
 .chip:hover,.opt:hover{transform:translateY(-1px) scale(1.02)}
-/* neaktívne stmavené */
 #g-motor .opt:not(.is-active),
 #g-print .chip:not(.is-active),
 #g-lam .chip:not(.is-active),
-#g-mini .chip:not(.is-active){opacity:.75; background:var(--chip-dim)}
-/* aktívne = biele s čiernym textom */
+#g-mini .chip:not(.is-active){opacity:.85;background:var(--chip-dim)}
 .is-active{
-  background:#fff;
-  color:#000;
-  border-color:var(--accent);
-  box-shadow:0 0 0 2px rgba(198,163,0,.2), 0 8px 22px rgba(0,0,0,.25);
+  background:#e6e6e6; color:#000; border-color:var(--accent);
+  box-shadow:0 0 0 2px rgba(198,163,0,.15),0 8px 18px rgba(0,0,0,.25);
 }
 
 .thumb{width:40px;height:40px;border-radius:8px;border:1px solid var(--stroke);background-size:cover;background-position:center}
-input[type="text"],input[type="email"],input[type="tel"],textarea{
-  width:100%;padding:12px 14px;border:1px solid var(--stroke);border-radius:12px;background:#0a0c11;color:var(--ink);font-size:16px;outline:none;transition:border-color .15s, box-shadow .15s
+input,textarea{
+  width:100%;padding:12px 14px;border:1px solid var(--stroke);border-radius:12px;background:#0a0c11;
+  color:var(--ink);font-size:16px;outline:none;transition:border-color .15s,box-shadow .15s
 }
 input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(198,163,0,.18)}
 textarea{min-height:120px;resize:vertical}
-.hint{font-size:12px;color:var(--muted)}
-.upload{display:flex;gap:10px;align-items:center;padding:12px;border:1px dashed var(--stroke);border-radius:12px;background:#0c0f14}
+
+/* upload */
+.upload{display:flex;gap:10px;align-items:center;padding:12px;border:1px dashed var(--stroke);
+  border-radius:12px;background:#0c0f14}
+.upload.dragover{border-color:var(--accent);background:#0f1218}
 .upload input{display:none}
 .upbtn{padding:10px 12px;border-radius:10px;border:1px solid var(--stroke);background:#0f1218;cursor:pointer}
 .preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .preview .filetag{font-size:12px;border:1px solid var(--stroke);padding:6px 8px;border-radius:8px;background:#0f1218}
 
 .summary{position:sticky;top:16px}
-.kpi{display:flex;justify-content:space-between;align-items:center;border:1px dashed var(--stroke);padding:12px 14px;border-radius:12px;background:#0e1117;margin-bottom:8px}
+.kpi{display:flex;justify-content:space-between;align-items:center;border:1px dashed var(--stroke);
+  padding:12px 14px;border-radius:12px;background:#0e1117;margin-bottom:8px}
 .kpi strong{font-size:18px}
 .kpi.total{border-color:rgba(198,163,0,.45);background:linear-gradient(180deg,#11141c,#0d1016)}
 .actions{display:flex;gap:10px;flex-wrap:wrap}
@@ -81,34 +79,26 @@ textarea{min-height:120px;resize:vertical}
 .btn.primary{background:var(--accent);color:var(--accent-ink);box-shadow:0 8px 18px rgba(198,163,0,.18)}
 .btn.ghost{background:transparent;color:#fff;border:1px solid var(--stroke)}
 
-.footerbar{position:fixed;inset:auto 0 0 0;background:rgba(10,12,17,.9);backdrop-filter:saturate(120%) blur(8px);border-top:1px solid var(--stroke);display:none}
-.footerbar .inner{max-width:1200px;margin:0 auto;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-@media(max-width:840px){.footerbar{display:block}}
-
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:100px;background:#0e1219;border:1px solid var(--stroke);padding:10px 14px;border-radius:12px;opacity:0;pointer-events:none;transition:opacity .2s}
-.toast.show{opacity:1}
-.confetti{pointer-events:none;position:fixed;inset:0}
-
-/* Splash 5s */
-#sr-splash{position:fixed;inset:0;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;animation: srSplashFade 5s ease forwards}
-#sr-splash img{width:40vw; max-width:500px; height:auto;animation: srLogoZoom 5s ease forwards}
+/* splash */
+#sr-splash{position:fixed;inset:0;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;animation:srSplashFade 5s ease forwards}
+#sr-splash img{width:45vw;max-width:480px;height:auto;animation:srLogoZoom 5s ease forwards}
 #sr-splash p{color:#fff;font-size:13px;margin-top:12px;opacity:.75}
-@keyframes srSplashFade{0%{opacity:1}80%{opacity:1}100%{opacity:0;visibility:hidden}}
+@keyframes srSplashFade{0%{opacity:1}90%{opacity:1}100%{opacity:0;visibility:hidden}}
 @keyframes srLogoZoom{0%{transform:scale(.8);opacity:0}60%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}
 </style>
 </head>
 <body>
 
-<!-- Úvodná animácia (splash) -->
+<!-- úvodná animácia -->
 <div id="sr-splash">
-  <img src="https://raw.githubusercontent.com/stillridecompany-dot/stillride-config./main/StillRide_logo_hore.svg" alt="StillRide logo">
+  <img src="./StillRide_logo_hore.svg" alt="StillRide logo">
   <p>Načítavám konfigurátor…</p>
 </div>
 
 <div class="container">
   <header>
     <div class="logo">
-      <img src="https://raw.githubusercontent.com/stillridecompany-dot/stillride-config./main/StillRide_logo_hore.svg" alt="StillRide logo">
+      <img src="./StillRide_logo_hore.svg" alt="StillRide logo">
       <div class="title">
         <h1>Konfigurátor polepov</h1>
         <div class="sub">Vyklikaj si možnosti a hneď uvidíš cenu</div>
@@ -116,387 +106,134 @@ textarea{min-height:120px;resize:vertical}
     </div>
   </header>
 
-  <!-- klikateľný krokový indikátor -->
   <div class="stepper">
-    <div class="step is-on" data-target="#sec-moto">1. Moto</div>
-    <div class="step" data-target="#sec-detail">2. Detail</div>
-    <div class="step" data-target="#sec-material">3. Materiál</div>
-    <div class="step" data-target="#sec-summary">4. Súhrn</div>
+    <div class="step" data-step="1">1. Moto</div>
+    <div class="step" data-step="2">2. Detail</div>
+    <div class="step" data-step="3">3. Materiál</div>
+    <div class="step" data-step="4">4. Súhrn</div>
   </div>
 
   <div class="grid">
-    <!-- LEFT -->
     <div class="card">
-
-      <!-- 1) Typ motorky -->
-      <section id="sec-moto"></section>
       <h2>Typ motorky *</h2>
       <div class="desc">(Štandardná 85–450 ccm = 0 € • Malá 50–60 ccm = −40 €)</div>
       <div class="row" id="g-motor">
-        <button class="opt is-active" data-key="motorType" data-value="Štandardná (85–450 ccm)" data-add="0">Štandardná (+0€)</button>
-        <button class="opt" data-key="motorType" data-value="Malá (50–60 ccm)" data-add="-40">Malá (−40€)</button>
+        <button class="opt is-active" data-key="motorType" data-value="Štandardná" data-add="0">Štandardná (+0€)</button>
+        <button class="opt" data-key="motorType" data-value="Malá" data-add="-40">Malá (−40€)</button>
       </div>
 
-      <div style="height:12px"></div>
-
-      <!-- 2) Model + opis + kontakt -->
-      <section id="sec-detail"></section>
       <h2>Model a rok *</h2>
-      <div class="desc">(napr. Honda CRF250 2026)</div>
       <input id="model" type="text" placeholder="napr. Honda CRF250 2026">
 
-      <div style="height:12px"></div>
       <h2>Opis polepu *</h2>
       <div class="desc">(Napíš čo najpresnejšie: štýl, meno, číslo, logá…)</div>
       <textarea id="opis" placeholder="Tvoj opis..."></textarea>
 
-      <div style="height:12px"></div>
-      <h2>Upload log (voliteľné)</h2>
-      <div class="upload">
-        <label class="upbtn">
-          <input id="files" type="file" multiple accept=".ai,.pdf,.svg,.eps,.png,.jpg,.jpeg" />
-          Nahrať súbory
-        </label>
-        <div class="hint">Ideálne vektor (.ai/.svg). Max ~100 MB spolu.</div>
-      </div>
-      <div class="preview" id="preview"></div>
-
-      <div style="height:12px"></div>
       <h2>Kontakt *</h2>
-      <div class="desc">(stačí aspoň e-mail alebo tel.)</div>
       <div class="row">
         <input id="email" type="email" placeholder="tvoj@email.sk" style="flex:1 1 260px">
         <input id="phone" type="tel" placeholder="+421 9.." style="flex:1 1 180px">
       </div>
 
-      <div style="height:16px"></div>
+      <h2>Upload log</h2>
+      <div class="upload" id="uploadZone">
+        <label class="upbtn"><input id="files" type="file" multiple/>Nahrať súbory</label>
+        <div class="hint">Ideálne vektor (.ai/.svg). Max 100 MB.</div>
+      </div>
+      <div class="preview" id="preview"></div>
 
-      <!-- 3) Tlač -->
-      <section id="sec-material"></section>
       <h2>Tlač *</h2>
       <div class="row" id="g-print">
-        <button class="chip is-active" data-key="print" data-value="základná" data-add="0">
-          <span class="thumb" style="background-image:linear-gradient(#fff,#f1f1f1)"></span>Základná
-        </button>
-        <button class="chip" data-key="print" data-value="chrómová" data-add="50">
-          <span class="thumb" style="background-image:linear-gradient(45deg,#f8f8f8,#bcbcbc,#ededed,#9a9a9a)"></span>Chrómová (+50€)
-        </button>
-        <button class="chip" data-key="print" data-value="holochrom" data-add="70">
-          <span class="thumb" style="background-image:linear-gradient(45deg,#ffea00,#ff58d6,#00d2ff,#85ff5e,#ffd166)"></span>Holochrom (+70€)
-        </button>
-        <button class="chip" data-key="print" data-value="neón" data-add="70">
-          <span class="thumb" style="background-image:linear-gradient(45deg,#eaff00,#00ffa3)"></span>Neón (+70€)
-        </button>
+        <button class="chip is-active" data-key="print" data-value="základná" data-add="0">Základná</button>
+        <button class="chip" data-key="print" data-value="chrómová" data-add="50">Chrómová (+50€)</button>
+        <button class="chip" data-key="print" data-value="holochrom" data-add="70">Holochrom (+70€)</button>
+        <button class="chip" data-key="print" data-value="neón" data-add="70">Neón (+70€)</button>
       </div>
 
-      <div style="height:14px"></div>
-      <!-- 4) Laminácia -->
       <h2>Laminácia *</h2>
       <div class="row" id="g-lam">
-        <button class="chip is-active" data-key="laminacia" data-value="lesklá" data-add="0">
-          <span class="thumb" style="background-image:linear-gradient(45deg,#fff,#cfcfcf,#9a9a9a)"></span>Lesklá
-        </button>
-        <button class="chip" data-key="laminacia" data-value="matná" data-add="0">
-          <span class="thumb" style="background:#8a8a8a"></span>Matná
-        </button>
-        <button class="chip" data-key="laminacia" data-value="trblietky" data-add="20">
-          <span class="thumb" style="background:#222;box-shadow:inset 0 0 0 1px #bfbfbf, 0 0 0 1px #2a2a2a"></span>Trblietky (+20€)
-        </button>
-        <button class="chip" data-key="laminacia" data-value="prizm" data-add="15">
-          <span class="thumb" style="background-image:linear-gradient(45deg,#ff6,#f6c,#6cf,#6f6)"></span>Prizm (+15€)
-        </button>
-        <button class="chip" data-key="laminacia" data-value="asphalt" data-add="15">
-          <span class="thumb" style="background:#121212;box-shadow:inset 0 0 0 1px #4a4a4a"></span>Asphalt (+15€)
-        </button>
-      </div>
-
-      <div style="height:14px"></div>
-      <!-- 5) Minitabuľky -->
-      <h2>Minitabuľky</h2>
-      <div class="row" id="g-mini">
-        <button class="chip is-active" data-key="minitabulky" data-value="0 ks" data-add="0">Nie</button>
-        <button class="chip" data-key="minitabulky" data-value="5 ks" data-add="5">5 ks (+5€)</button>
-        <button class="chip" data-key="minitabulky" data-value="10 ks" data-add="8">10 ks (+8€)</button>
-        <button class="chip" data-key="minitabulky" data-value="15 ks" data-add="12">15 ks (+12€)</button>
+        <button class="chip is-active" data-key="laminacia" data-value="lesklá" data-add="0">Lesklá</button>
+        <button class="chip" data-key="laminacia" data-value="matná" data-add="0">Matná</button>
+        <button class="chip" data-key="laminacia" data-value="trblietky" data-add="20">Trblietky (+20€)</button>
+        <button class="chip" data-key="laminacia" data-value="prizm" data-add="15">Prizm (+15€)</button>
       </div>
     </div>
 
-    <!-- RIGHT -->
-    <div class="card summary" id="sec-summary">
+    <div class="card summary">
       <h2>Súhrn</h2>
-      <div class="kpi"><div>Base (štandard):</div><strong>€ <span id="priceBase">134.90</span></strong></div>
-      <div class="kpi"><div>Príplatky spolu:</div><strong>€ <span id="priceAdd">0.00</span></strong></div>
+      <div class="kpi"><div>Base:</div><strong>€ <span id="priceBase">134.90</span></strong></div>
+      <div class="kpi"><div>Príplatky:</div><strong>€ <span id="priceAdd">0.00</span></strong></div>
       <div class="kpi total"><div><strong>Celková suma:</strong></div><strong>€ <span id="priceTotal">134.90</span></strong></div>
 
-      <div class="desc" style="margin-top:8px">Po potvrdení prebehne kontrola polí. Môžeš skopírovať sumár alebo uložiť rozpracované.</div>
       <div class="actions">
         <button class="btn primary" id="confirm">Potvrdiť konfiguráciu</button>
-        <button class="btn ghost" id="copy">Kopíro
-          vať sumár</button>
-        <button class="btn ghost" id="save">Uložiť (lokálne)</button>
-        <button class="btn ghost" id="reset">Reset</button>
       </div>
     </div>
   </div>
 </div>
-
-<!-- mobilná spodná lišta -->
-<div class="footerbar">
-  <div class="inner">
-    <div>
-      <div style="font-size:12px;color:var(--muted)">Celková suma</div>
-      <div style="font-weight:800">€ <span id="priceTotal_m">134.90</span></div>
-    </div>
-    <button class="btn primary" id="confirm_m">Potvrdiť</button>
-  </div>
-</div>
-
-<div id="toast" class="toast">Skopírované.</div>
-<canvas id="fx" class="confetti"></canvas>
 
 <script>
 (function(){
-  // === CONFIG ===
-  const BASE_PRICE = 134.90;
-  const RETURN_URL = "https://www.stillridecompany.com/custom-kit2"; // fallback keď Stripe nie je pripravený
-  const K = "stillride_cfg_v51";
+const BASE_PRICE = 134.90;
+const RETURN_URL = "https://www.stillridecompany.com/custom-kit2";
+const K = "stillride_cfg_v50";
+const $ = s=>document.querySelector(s);
+let state={motorType:{value:"Štandardná",add:0},model:"",opis:"",email:"",phone:"",print:{value:"základná",add:0},laminacia:{value:"lesklá",add:0}};
 
-  // === HELPERS ===
-  const $  = sel => document.querySelector(sel);
-  const $$ = sel => Array.from(document.querySelectorAll(sel));
-  const fmt = n => (Math.round(n*100)/100).toFixed(2);
-
-  // === STATE ===
-  let state = {
-    motorType:{value:"Štandardná (85–450 ccm)", add:0},
-    model:"", opis:"",
-    email:"", phone:"",
-    print:{value:"základná", add:0},
-    laminacia:{value:"lesklá", add:0},
-    minitabulky:{value:"0 ks", add:0},
-    files:[]
-  };
-
-  // === Klikateľný stepper → scroll
-  $$(".stepper .step").forEach(s=>{
-    s.addEventListener("click", ()=>{
-      const id = s.getAttribute("data-target");
-      const el = id && document.querySelector(id);
-      if(el){ el.scrollIntoView({behavior:"smooth", block:"start"}); }
-    });
+function fmt(n){return (Math.round(n*100)/100).toFixed(2);}
+function recompute(){
+  const add = state.motorType.add + state.print.add + state.laminacia.add;
+  $("#priceBase").textContent = fmt(BASE_PRICE);
+  $("#priceAdd").textContent = fmt(add);
+  $("#priceTotal").textContent = fmt(BASE_PRICE+add);
+}
+function setActive(btn){
+  const g=btn.parentElement;
+  g.querySelectorAll(".is-active").forEach(b=>b.classList.remove("is-active"));
+  btn.classList.add("is-active");
+  const key=btn.dataset.key;
+  state[key]={value:btn.dataset.value,add:Number(btn.dataset.add||0)};
+  recompute();
+}
+["g-motor","g-print","g-lam"].forEach(id=>{
+  $("#"+id).addEventListener("click",e=>{
+    const b=e.target.closest("button");if(!b)return;setActive(b);
   });
+});
 
-  // === Aktívne voľby (biele tlačidlo) ===
-  function setActive(btn){
-    const group = btn.parentElement;
-    group.querySelectorAll('.is-active').forEach(b=>b.classList.remove('is-active'));
-    btn.classList.add('is-active');
-    const key = btn.dataset.key;
-    state[key] = { value: btn.dataset.value, add: Number(btn.dataset.add||0) };
-    recompute(); persist();
-  }
-  ["g-motor","g-print","g-lam","g-mini"].forEach(id=>{
-    const el = document.getElementById(id);
-    el.addEventListener('click',e=>{
-      const b = e.target.closest('button'); if(!b) return;
-      setActive(b);
-    });
+$("#model").addEventListener("input",e=>{state.model=e.target.value});
+$("#opis").addEventListener("input",e=>{state.opis=e.target.value});
+$("#email").addEventListener("input",e=>{state.email=e.target.value});
+$("#phone").addEventListener("input",e=>{state.phone=e.target.value});
+
+function confirmFlow(){
+  const total=$("#priceTotal").textContent;
+  if(!state.model.trim()||!state.opis.trim()){alert("Vyplň model a opis.");return;}
+  const params=new URLSearchParams();
+  params.set("price",total);
+  params.set("model",state.model);
+  params.set("opis",state.opis);
+  params.set("print",state.print.value);
+  params.set("laminacia",state.laminacia.value);
+  setTimeout(()=>location.href=RETURN_URL+"?"+params.toString(),500);
+}
+$("#confirm").addEventListener("click",confirmFlow);
+
+// stepper scroll
+document.querySelectorAll(".step").forEach(step=>{
+  step.addEventListener("click",()=>{
+    const id=step.dataset.step;
+    if(id==="1")window.scrollTo({top:0,behavior:"smooth"});
+    if(id==="2")document.querySelector("#model").scrollIntoView({behavior:"smooth"});
+    if(id==="3")document.querySelector("#g-print").scrollIntoView({behavior:"smooth"});
+    if(id==="4")document.querySelector(".summary").scrollIntoView({behavior:"smooth"});
+    document.querySelectorAll(".step").forEach(s=>s.classList.remove("is-on"));
+    step.classList.add("is-on");
   });
+});
 
-  // === Inputs ===
-  $("#model").addEventListener("input",e=>{ state.model=e.target.value; persist(); });
-  $("#opis").addEventListener("input",e=>{ state.opis=e.target.value; persist(); });
-  $("#email").addEventListener("input",e=>{ state.email=e.target.value; persist(); });
-  $("#phone").addEventListener("input",e=>{ state.phone=e.target.value; persist(); });
-
-  // === Upload preview (mená a veľkosti) ===
-  $("#files").addEventListener("change", (e)=>{
-    const out = $("#preview"); out.innerHTML="";
-    const files = Array.from(e.target.files||[]);
-    state.files = files.map(f=>({name:f.name,size:f.size}));
-    files.slice(0,6).forEach(f=>{
-      const tag = document.createElement('span');
-      tag.className="filetag";
-      tag.textContent = f.name + " ("+ (Math.round(f.size/1024)) +" kB)";
-      out.appendChild(tag);
-    });
-    persist();
-  });
-
-  // === Výpočet cien ===
-  function recompute(){
-    const add = state.motorType.add + state.print.add + state.laminacia.add + state.minitabulky.add;
-    $("#priceBase").textContent = fmt(BASE_PRICE);
-    $("#priceAdd").textContent  = fmt(add);
-    const total = BASE_PRICE + add;
-    $("#priceTotal").textContent   = fmt(total);
-    $("#priceTotal_m").textContent = fmt(total);
-  }
-
-  // === localStorage ===
-  function persist(){ try{ localStorage.setItem(K, JSON.stringify(state)); }catch(e){} }
-  function restore(){
-    try{
-      const raw = localStorage.getItem(K); if(!raw) return;
-      state = Object.assign(state, JSON.parse(raw)||{});
-      // reapply selections
-      [ ["g-motor","motorType"], ["g-print","print"], ["g-lam","laminacia"], ["g-mini","minitabulky"] ].forEach(([gid,key])=>{
-        const el = $("#"+gid);
-        const btn = Array.from(el.querySelectorAll('button')).find(b=>b.dataset.value===state[key].value);
-        if(btn) setActive(btn);
-      });
-      $("#model").value = state.model||"";
-      $("#opis").value  = state.opis||"";
-      $("#email").value = state.email||"";
-      $("#phone").value = state.phone||"";
-      if(state.files && state.files.length){
-        const out = $("#preview"); out.innerHTML="";
-        state.files.slice(0,6).forEach(f=>{
-          const tag = document.createElement('span'); tag.className="filetag"; tag.textContent = f.name + (f.size?(" ("+Math.round(f.size/1024)+" kB)"):"");
-          out.appendChild(tag);
-        });
-      }
-    }catch(e){}
-  }
-
-  // === Stepper highlight podľa SCROLLU ===
-  const sections = [
-    ["#sec-moto",     0],
-    ["#sec-detail",   1],
-    ["#sec-material", 2],
-    ["#sec-summary",  3],
-  ].map(([sel,idx])=>({el:document.querySelector(sel), idx}));
-
-  const steps = $$(".stepper .step");
-  function setStep(idx){
-    steps.forEach(s=>s.classList.remove("is-on"));
-    if(steps[idx]) steps[idx].classList.add("is-on");
-  }
-  // observer – keď sekcia vojde do view, označí krok
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        const found = sections.find(s=>s.el===e.target);
-        if(found) setStep(found.idx);
-      }
-    });
-  }, { rootMargin:"-40% 0px -50% 0px", threshold:[0, .2, .6] });
-
-  sections.forEach(s=>{ if(s.el) io.observe(s.el); });
-
-  // === Copy & toast ===
-  function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),1400); }
-  function copySummary(){
-    const total = $("#priceTotal").textContent;
-    const txt = [
-      "=== StillRide – Konfigurácia ===",
-      "Finálna cena: € " + total,
-      "Typ: " + state.motorType.value + " (" + (state.motorType.add>=0?'+':'') + state.motorType.add + " €)",
-      "Model/rok: " + (state.model || "-"),
-      "Opis: " + (state.opis || "-"),
-      "Tlač: " + state.print.value + " (" + (state.print.add>=0?'+':'') + state.print.add + " €)",
-      "Laminácia: " + state.laminacia.value + " (" + (state.laminacia.add>=0?'+':'') + state.laminacia.add + " €)",
-      "Minitabuľky: " + state.minitabulky.value + " (" + (state.minitabulky.add>=0?'+':'') + state.minitabulky.add + " €)",
-      "Kontakt: " + (state.email||"-") + (state.phone?(" / "+state.phone):""),
-      state.files?.length ? ("Súbory: "+ state.files.map(f=>f.name).join(", ")) : ""
-    ].join("\n");
-    navigator.clipboard?.writeText(txt);
-    toast("Skopírované.");
-  }
-
-  // === Mini confetti (vizuál) ===
-  const fx = $("#fx"), ctx = fx.getContext("2d"); let ps=[];
-  function resize(){ fx.width=innerWidth; fx.height=innerHeight; }
-  addEventListener('resize',resize); resize();
-  function boom(){
-    ps=[]; for(let i=0;i<80;i++){ ps.push({x:fx.width/2,y:fx.height-40, vx:(Math.random()-0.5)*6, vy:-Math.random()*6-4, a:Math.random()*Math.PI}); }
-    let t=0; (function step(){
-      ctx.clearRect(0,0,fx.width,fx.height);
-      ps.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.vy+=0.15; p.a+=0.2;
-        ctx.fillStyle = (Math.random()<.5) ? "#C6A300" : "#ffffff";
-        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.a); ctx.fillRect(-3,-3,6,6); ctx.restore();
-      });
-      if((t+=1)<120) requestAnimationFrame(step); else ctx.clearRect(0,0,fx.width,fx.height);
-    })();
-  }
-
-  // === Validácia ===
-  function validate(){
-    if(!state.model?.trim()) { alert("Prosím vyplň model a rok."); $("#model").focus(); return false; }
-    if(!state.opis?.trim())  { alert("Prosím vyplň 'Opis polepu'."); $("#opis").focus(); return false; }
-    if(!(state.email?.trim()) && !(state.phone?.trim())) { alert("Prosím zadaj aspoň E-mail alebo Tel."); $("#email").focus(); return false; }
-    return true;
-  }
-
-  // === Stripe helper (ak nie je funkcia, padne do fallbacku) ===
-  async function tryStripe(params){
-    try{
-      const res = await fetch('/.netlify/functions/checkout', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(Object.fromEntries(params))
-      });
-      const data = await res.json();
-      if(data?.url){ location.href = data.url; return true; }
-      return false;
-    }catch(e){ return false; }
-  }
-
-  // === Confirm flow ===
-  async function confirmFlow(){
-    if(!validate()) return;
-    boom();
-    const total = $("#priceTotal").textContent;
-
-    const params = new URLSearchParams();
-    params.set("price", total);
-    params.set("typ", state.motorType.value);
-    params.set("model", state.model);
-    params.set("opis", state.opis||"");
-    params.set("print", state.print.value);
-    params.set("laminacia", state.laminacia.value);
-    params.set("minitabulky", state.minitabulky.value);
-    params.set("contact", [state.email, state.phone].filter(Boolean).join(" / "));
-
-    const note = [
-      "=== StillRide – Konfigurácia ===",
-      "Finálna cena: € " + total,
-      "Typ: " + state.motorType.value + " (" + (state.motorType.add>=0?'+':'') + state.motorType.add + " €)",
-      "Model/rok: " + (state.model || "-"),
-      "Opis: " + (state.opis || "-"),
-      "Tlač: " + state.print.value + " (" + (state.print.add>=0?'+':'') + state.print.add + " €)",
-      "Laminácia: " + state.laminacia.value + " (" + (state.laminacia.add>=0?'+':'') + state.laminacia.add + " €)",
-      "Minitabuľky: " + state.minitabulky.value + " (" + (state.minitabulky.add>=0?'+':'') + state.minitabulky.add + " €)",
-      "Kontakt: " + (state.email||"-") + (state.phone?(" / "+state.phone):""),
-      state.files?.length ? ("Súbory: "+ state.files.map(f=>f.name).join(", ")) : ""
-    ].join("\n");
-    params.set("note", note);
-
-    // 1) Stripe (ak máš funkciu)
-    const ok = await tryStripe(params);
-    if(ok) return;
-
-    // 2) Fallback: návrat na ER s parametrami
-    setTimeout(()=>{ location.href = RETURN_URL + "?" + params.toString(); }, 400);
-  }
-
-  // === Ovládacie prvky ===
-  $("#copy").addEventListener("click", copySummary);
-  $("#save").addEventListener("click", ()=>{ try{localStorage.setItem(K, JSON.stringify(state));}catch(e){}; toast("Uložené."); });
-  $("#reset").addEventListener("click", ()=>{ localStorage.removeItem(K); location.reload(); });
-  $("#confirm").addEventListener("click", confirmFlow);
-  $("#confirm_m").addEventListener("click", confirmFlow);
-
-  // === Splash remove po 5s ===
-  document.addEventListener('DOMContentLoaded',()=>{
-    setTimeout(()=>document.getElementById('sr-splash')?.remove(),5000);
-  });
-
-  // === Init ===
-  restore(); recompute();
-  // mini konfety pri štarte
-  setTimeout(boom, 350);
+document.addEventListener("DOMContentLoaded",()=>{setTimeout(()=>document.getElementById("sr-splash")?.remove(),5000);recompute();});
 })();
 </script>
 </body>
 </html>
-
