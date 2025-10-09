@@ -6,101 +6,57 @@
 <title>StillRide – Konfigurátor polepov</title>
 <style>
 :root{
-  --bg:#0b0c0f; --panel:#11141a; --panel2:#0e1016; --muted:#9aa2ad; --ink:#f4f6f8;
-  --stroke:#242938; --chip:#171a24; --chip-dim:#0d0f15;
-  --accent:#C6A300; --accent-ink:#1a1500;
+  --bg:#0b0c0f;--panel:#11141a;--panel2:#0e1016;--muted:#9aa2ad;--ink:#f4f6f8;
+  --stroke:#242938;--chip:#171a24;--chip-dim:#0d0f15;--accent:#C6A300;--accent-ink:#1a1500;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{
-  margin:0;background:radial-gradient(1200px 600px at 10% -10%,#141827,transparent),linear-gradient(#0b0c0f,#0e1116);
-  color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;scroll-behavior:smooth;
-}
+html,body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,#141827,transparent),linear-gradient(#0b0c0f,#0e1116);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;scroll-behavior:smooth}
 .container{max-width:1200px;margin:0 auto;padding:18px}
 header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:6px 0 18px}
 .logo{display:flex;align-items:center;gap:12px}
-.logo img{height:70px;width:auto;display:block;animation:fadeIn 2s ease-in forwards}
+.logo img{height:70px;width:auto;animation:logoFadeIn 2s ease forwards}
+@keyframes logoFadeIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}
 .title h1{margin:0;font-size:22px;color:var(--accent)}
 .title .sub{color:var(--muted);font-size:12px}
 .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
 @media(max-width:1000px){.grid{grid-template-columns:1fr}}
-.card{
-  background:linear-gradient(180deg,var(--panel),var(--panel2));
-  border:1px solid var(--stroke);border-radius:16px;padding:16px;
-  box-shadow:0 10px 28px rgba(0,0,0,.28);
-  opacity:0;transform:translateY(30px);
-  animation:fadeUp 1s ease forwards;
-}
+.card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--stroke);border-radius:16px;padding:16px;box-shadow:0 10px 28px rgba(0,0,0,.28);opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.card.visible{opacity:1;transform:translateY(0)}
 h2{font-size:13px;margin:0 0 8px;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
 .desc{color:var(--muted);font-size:12px;margin:-4px 0 10px}
-
-/* stepper */
 .stepper{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
-.step{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--stroke);
-  border-radius:12px;background:#0e1117;font-size:12px;opacity:.8;cursor:pointer;user-select:none;transition:.18s}
-.step:hover{transform:translateY(-1px)}
+.step{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--stroke);border-radius:12px;background:#0e1117;font-size:12px;opacity:.8;cursor:pointer;transition:.18s}
 .step.is-on{opacity:1;border-color:var(--accent);box-shadow:0 0 0 2px rgba(198,163,0,.14)}
-
-/* chips */
 .row{display:flex;flex-wrap:wrap;gap:12px}
-.chip,.opt{
-  position:relative;display:inline-flex;align-items:center;gap:10px;justify-content:center;
-  min-width:170px;padding:14px 16px;border-radius:12px;background:var(--chip);
-  border:1.5px solid var(--stroke);cursor:pointer;overflow:hidden;
-  transition:transform .12s, box-shadow .18s, border-color .18s, background .18s, color .18s;
-}
+.chip,.opt{display:inline-flex;align-items:center;gap:10px;justify-content:center;min-width:170px;padding:14px 16px;border-radius:12px;background:var(--chip);border:1.5px solid var(--stroke);cursor:pointer;transition:transform .12s,box-shadow .18s,border-color .18s,background .18s,color .18s}
 .chip:hover,.opt:hover{transform:translateY(-1px) scale(1.02)}
-#g-motor .opt:not(.is-active),
-#g-print .chip:not(.is-active),
-#g-lam .chip:not(.is-active),
-#g-mini .chip:not(.is-active){opacity:.85;background:var(--chip-dim)}
-.is-active{
-  background:#e6e6e6; color:#000; border-color:var(--accent);
-  box-shadow:0 0 0 2px rgba(198,163,0,.15),0 8px 18px rgba(0,0,0,.25);
-}
-
+#g-motor .opt:not(.is-active),#g-print .chip:not(.is-active),#g-lam .chip:not(.is-active),#g-mini .chip:not(.is-active){opacity:.85;background:var(--chip-dim)}
+.is-active{background:#e6e6e6;color:#000;border-color:var(--accent);box-shadow:0 0 0 2px rgba(198,163,0,.15),0 8px 18px rgba(0,0,0,.25)}
 .thumb{width:40px;height:40px;border-radius:8px;border:1px solid var(--stroke);background-size:cover;background-position:center}
-input,textarea{
-  width:100%;padding:12px 14px;border:1px solid var(--stroke);border-radius:12px;background:#0a0c11;
-  color:var(--ink);font-size:16px;outline:none;transition:border-color .15s,box-shadow .15s
-}
+input,textarea{width:100%;padding:12px 14px;border:1px solid var(--stroke);border-radius:12px;background:#0a0c11;color:var(--ink);font-size:16px;outline:none;transition:border-color .15s,box-shadow .15s}
 input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(198,163,0,.18)}
 textarea{min-height:120px;resize:vertical}
-
-/* upload */
-.upload{display:flex;gap:10px;align-items:center;padding:12px;border:1px dashed var(--stroke);
-  border-radius:12px;background:#0c0f14}
+.upload{display:flex;gap:10px;align-items:center;padding:12px;border:1px dashed var(--stroke);border-radius:12px;background:#0c0f14}
 .upload input{display:none}
 .upbtn{padding:10px 12px;border-radius:10px;border:1px solid var(--stroke);background:#0f1218;cursor:pointer}
 .preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .preview .filetag{font-size:12px;border:1px solid var(--stroke);padding:6px 8px;border-radius:8px;background:#0f1218}
-
-.summary{position:sticky;top:16px}
-.kpi{display:flex;justify-content:space-between;align-items:center;border:1px dashed var(--stroke);
-  padding:12px 14px;border-radius:12px;background:#0e1117;margin-bottom:8px}
+.kpi{display:flex;justify-content:space-between;align-items:center;border:1px dashed var(--stroke);padding:12px 14px;border-radius:12px;background:#0e1117;margin-bottom:8px}
 .kpi strong{font-size:18px}
 .kpi.total{border-color:rgba(198,163,0,.45);background:linear-gradient(180deg,#11141c,#0d1016)}
-.actions{display:flex;gap:10px;flex-wrap:wrap}
 .btn{border:none;border-radius:12px;padding:12px 16px;cursor:pointer;font-weight:800;letter-spacing:.5px}
 .btn.primary{background:var(--accent);color:var(--accent-ink);box-shadow:0 8px 18px rgba(198,163,0,.18)}
-
-/* splash */
 #sr-splash{position:fixed;inset:0;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;animation:srSplashFade 5s ease forwards}
 #sr-splash img{width:45vw;max-width:480px;height:auto;animation:srLogoZoom 5s ease forwards}
-#sr-splash p{color:#fff;font-size:13px;margin-top:12px;opacity:.75}
 @keyframes srSplashFade{0%{opacity:1}90%{opacity:1}100%{opacity:0;visibility:hidden}}
-@keyframes srLogoZoom{0%{transform:scale(.8);opacity:0}40%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}
-
-/* fade effects */
-@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes srLogoZoom{0%{transform:scale(.8);opacity:0}60%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}
 </style>
 </head>
 <body>
-
-<!-- úvodná animácia -->
+<!-- Splash -->
 <div id="sr-splash">
   <img src="./StillRide_logo_hore.svg" alt="StillRide logo">
-  <p>Načítavám konfigurátor…</p>
+  <p style="color:#fff;font-size:13px;opacity:.75;margin-top:12px">Načítavám konfigurátor…</p>
 </div>
 
 <div class="container">
@@ -114,6 +70,7 @@ textarea{min-height:120px;resize:vertical}
     </div>
   </header>
 
+  <!-- Stepper -->
   <div class="stepper">
     <div class="step" data-step="1">1. Moto</div>
     <div class="step" data-step="2">2. Detail</div>
@@ -122,20 +79,20 @@ textarea{min-height:120px;resize:vertical}
   </div>
 
   <div class="grid">
+    <!-- LEFT -->
     <div class="card">
       <h2>Typ motorky *</h2>
       <div class="desc">(Štandardná 85–450 ccm = 0 € • Malá 50–60 ccm = −40 €)</div>
       <div class="row" id="g-motor">
-        <button class="opt is-active" data-key="motorType" data-value="Štandardná" data-add="0">Štandardná (+0€)</button>
-        <button class="opt" data-key="motorType" data-value="Malá" data-add="-40">Malá (−40€)</button>
+        <button class="opt is-active" data-key="motorType" data-value="Štandardná (85–450 ccm)" data-add="0">Štandardná (+0€)</button>
+        <button class="opt" data-key="motorType" data-value="Malá (50–60 ccm)" data-add="-40">Malá (−40€)</button>
       </div>
 
       <h2>Model a rok *</h2>
       <input id="model" type="text" placeholder="napr. Honda CRF250 2026">
 
       <h2>Opis polepu *</h2>
-      <div class="desc">(Napíš čo najpresnejšie: štýl, meno, číslo, logá…)</div>
-      <textarea id="opis" placeholder="Tvoj opis..."></textarea>
+      <textarea id="opis" placeholder="Napíš čo najpresnejšie: štýl, meno, číslo, logá…"></textarea>
 
       <h2>Kontakt *</h2>
       <div class="row">
@@ -144,32 +101,32 @@ textarea{min-height:120px;resize:vertical}
       </div>
 
       <h2>Upload log</h2>
-      <div class="upload" id="uploadZone">
+      <div class="upload">
         <label class="upbtn"><input id="files" type="file" multiple/>Nahrať súbory</label>
-        <div class="hint">Ideálne vektor (.ai/.svg). Max 100 MB.</div>
+        <div class="hint">Ideálne vektor (.ai/.svg) max 100 MB.</div>
       </div>
       <div class="preview" id="preview"></div>
 
       <h2>Tlač *</h2>
       <div class="row" id="g-print">
         <button class="chip is-active" data-key="print" data-value="základná" data-add="0">
-          <span class="thumb" style="background-image:linear-gradient(#fff,#f1f1f1)"></span>Základná
+          <span class="thumb" style="background:linear-gradient(#fff,#f1f1f1)"></span>Základná
         </button>
         <button class="chip" data-key="print" data-value="chrómová" data-add="50">
-          <span class="thumb" style="background-image:linear-gradient(45deg,#f8f8f8,#bcbcbc,#ededed,#9a9a9a)"></span>Chrómová (+50€)
+          <span class="thumb" style="background:linear-gradient(45deg,#f8f8f8,#bcbcbc,#ededed,#9a9a9a)"></span>Chrómová (+50€)
         </button>
         <button class="chip" data-key="print" data-value="holochrom" data-add="70">
-          <span class="thumb" style="background-image:linear-gradient(45deg,#ffea00,#ff58d6,#00d2ff,#85ff5e,#ffd166)"></span>Holochrom (+70€)
+          <span class="thumb" style="background:linear-gradient(45deg,#ffea00,#ff58d6,#00d2ff,#85ff5e,#ffd166)"></span>Holochrom (+70€)
         </button>
         <button class="chip" data-key="print" data-value="neón" data-add="70">
-          <span class="thumb" style="background-image:linear-gradient(45deg,#eaff00,#00ffa3)"></span>Neón (+70€)
+          <span class="thumb" style="background:linear-gradient(45deg,#eaff00,#00ffa3)"></span>Neón (+70€)
         </button>
       </div>
 
       <h2>Laminácia *</h2>
       <div class="row" id="g-lam">
         <button class="chip is-active" data-key="laminacia" data-value="lesklá" data-add="0">
-          <span class="thumb" style="background-image:linear-gradient(45deg,#fff,#cfcfcf,#9a9a9a)"></span>Lesklá
+          <span class="thumb" style="background:linear-gradient(45deg,#fff,#cfcfcf,#9a9a9a)"></span>Lesklá
         </button>
         <button class="chip" data-key="laminacia" data-value="matná" data-add="0">
           <span class="thumb" style="background:#8a8a8a"></span>Matná
@@ -178,77 +135,137 @@ textarea{min-height:120px;resize:vertical}
           <span class="thumb" style="background:#222;box-shadow:inset 0 0 0 1px #bfbfbf,0 0 0 1px #2a2a2a"></span>Trblietky (+20€)
         </button>
         <button class="chip" data-key="laminacia" data-value="prizm" data-add="15">
-          <span class="thumb" style="background-image:linear-gradient(45deg,#ff6,#f6c,#6cf,#6f6)"></span>Prizm (+15€)
+          <span class="thumb" style="background:linear-gradient(45deg,#ff6,#f6c,#6cf,#6f6)"></span>Prizm (+15€)
         </button>
+      </div>
+
+      <h2>Minitabuľky</h2>
+      <div class="row" id="g-mini">
+        <button class="chip is-active" data-key="minitabulky" data-value="0 ks" data-add="0">Nie</button>
+        <button class="chip" data-key="minitabulky" data-value="5 ks" data-add="5">5 ks (+5€)</button>
+        <button class="chip" data-key="minitabulky" data-value="10 ks" data-add="8">10 ks (+8€)</button>
+        <button class="chip" data-key="minitabulky" data-value="15 ks" data-add="12">15 ks (+12€)</button>
       </div>
     </div>
 
+    <!-- RIGHT -->
     <div class="card summary">
       <h2>Súhrn</h2>
       <div class="kpi"><div>Base:</div><strong>€ <span id="priceBase">134.90</span></strong></div>
       <div class="kpi"><div>Príplatky:</div><strong>€ <span id="priceAdd">0.00</span></strong></div>
       <div class="kpi total"><div><strong>Celková suma:</strong></div><strong>€ <span id="priceTotal">134.90</span></strong></div>
-      <div class="actions">
-        <button class="btn primary" id="confirm">Potvrdiť konfiguráciu</button>
+
+      <div class="desc" id="summaryList" style="margin-top:8px;line-height:1.6">
+        <div><strong>Typ:</strong> <span id="sumMotor">Štandardná (85–450 ccm)</span></div>
+        <div><strong>Tlač:</strong> <span id="sumPrint">základná</span></div>
+        <div><strong>Laminácia:</strong> <span id="sumLam">lesklá</span></div>
+        <div><strong>Minitabuľky:</strong> <span id="sumMini">0 ks</span></div>
       </div>
+
+      <button class="btn primary" id="confirm" style="margin-top:12px">Potvrdiť konfiguráciu</button>
     </div>
   </div>
 </div>
 
 <script>
 (function(){
-const BASE_PRICE = 134.90;
-const RETURN_URL = "https://www.stillridecompany.com/custom-kit2";
-const $ = s=>document.querySelector(s);
-let state={motorType:{value:"Štandardná",add:0},model:"",opis:"",email:"",phone:"",print:{value:"základná",add:0},laminacia:{value:"lesklá",add:0}};
-function fmt(n){return (Math.round(n*100)/100).toFixed(2);}
-function recompute(){
-  const add = state.motorType.add + state.print.add + state.laminacia.add;
-  $("#priceBase").textContent = fmt(BASE_PRICE);
-  $("#priceAdd").textContent = fmt(add);
-  $("#priceTotal").textContent = fmt(BASE_PRICE+add);
-}
-function setActive(btn){
-  const g=btn.parentElement;
-  g.querySelectorAll(".is-active").forEach(b=>b.classList.remove("is-active"));
-  btn.classList.add("is-active");
-  const key=btn.dataset.key;
-  state[key]={value:btn.dataset.value,add:Number(btn.dataset.add||0)};
+  const BASE = 134.90;
+  const RETURN_URL = "https://www.stillridecompany.com/custom-kit2";
+
+  const $ = s=>document.querySelector(s);
+  const $$ = s=>Array.from(document.querySelectorAll(s));
+  const fmt = n => (Math.round(n*100)/100).toFixed(2);
+
+  let state = {
+    motorType:{value:"Štandardná (85–450 ccm)", add:0},
+    print:{value:"základná", add:0},
+    laminacia:{value:"lesklá", add:0},
+    minitabulky:{value:"0 ks", add:0},
+    model:"", opis:"", email:"", phone:""
+  };
+
+  function recompute(){
+    const add = state.motorType.add + state.print.add + state.laminacia.add + state.minitabulky.add;
+    $("#priceBase").textContent = fmt(BASE);
+    $("#priceAdd").textContent  = fmt(add);
+    $("#priceTotal").textContent= fmt(BASE + add);
+    // summary texty
+    $("#sumMotor").textContent = state.motorType.value;
+    $("#sumPrint").textContent = state.print.value;
+    $("#sumLam").textContent   = state.laminacia.value;
+    $("#sumMini").textContent  = state.minitabulky.value;
+  }
+
+  function setActive(btn){
+    const group = btn.parentElement;
+    group.querySelectorAll(".is-active").forEach(x=>x.classList.remove("is-active"));
+    btn.classList.add("is-active");
+    const key = btn.dataset.key;
+    state[key] = { value: btn.dataset.value, add: Number(btn.dataset.add || 0) };
+    recompute();
+  }
+
+  ["g-motor","g-print","g-lam","g-mini"].forEach(id=>{
+    $("#"+id).addEventListener("click", e=>{
+      const b = e.target.closest("button"); if(!b) return;
+      setActive(b);
+    });
+  });
+
+  // inputs (len držíme hodnoty ak by si ich chcel posielať v URL)
+  $("#model").addEventListener("input",e=>state.model=e.target.value);
+  $("#opis").addEventListener("input",e=>state.opis=e.target.value);
+  $("#email").addEventListener("input",e=>state.email=e.target.value);
+  $("#phone").addEventListener("input",e=>state.phone=e.target.value);
+
+  // fade-in kariet pri scroll
+  function checkCards(){
+    $$(".card").forEach(el=>{
+      const r = el.getBoundingClientRect();
+      if(r.top < innerHeight - 100) el.classList.add("visible");
+    });
+  }
+  document.addEventListener("scroll", checkCards);
+  setTimeout(checkCards, 50);
+
+  // confirm → redirect s parametrami
+  $("#confirm").addEventListener("click", ()=>{
+    if(!state.model.trim() || !state.opis.trim()){
+      alert("Vyplň prosím Model a Opis.");
+      return;
+    }
+    const total = $("#priceTotal").textContent;
+    const p = new URLSearchParams();
+    p.set("price", total);
+    p.set("typ", state.motorType.value);
+    p.set("model", state.model);
+    p.set("opis", state.opis);
+    p.set("print", state.print.value);
+    p.set("laminacia", state.laminacia.value);
+    p.set("minitabulky", state.minitabulky.value);
+    p.set("contact", [state.email, state.phone].filter(Boolean).join(" / "));
+    location.href = RETURN_URL + "?" + p.toString();
+  });
+
+  // splash off po 5s
+  setTimeout(()=>document.getElementById("sr-splash")?.remove(), 5000);
+
+  // init
   recompute();
-}
-["g-motor","g-print","g-lam"].forEach(id=>{
-  $("#"+id).addEventListener("click",e=>{
-    const b=e.target.closest("button");if(!b)return;setActive(b);
+  checkCards();
+
+  // stepper click scroll
+  $$(".step").forEach(s=>{
+    s.addEventListener("click", ()=>{
+      const step = s.dataset.step;
+      if(step==="1") window.scrollTo({top:0,behavior:"smooth"});
+      if(step==="2") $("#model").scrollIntoView({behavior:"smooth"});
+      if(step==="3") $("#g-print").scrollIntoView({behavior:"smooth"});
+      if(step==="4") $$(".summary")[0].scrollIntoView({behavior:"smooth"});
+      $$(".step").forEach(x=>x.classList.remove("is-on"));
+      s.classList.add("is-on");
+    });
   });
-});
-$("#model").addEventListener("input",e=>{state.model=e.target.value});
-$("#opis").addEventListener("input",e=>{state.opis=e.target.value});
-$("#email").addEventListener("input",e=>{state.email=e.target.value});
-$("#phone").addEventListener("input",e=>{state.phone=e.target.value});
-function confirmFlow(){
-  const total=$("#priceTotal").textContent;
-  if(!state.model.trim()||!state.opis.trim()){alert("Vyplň model a opis.");return;}
-  const params=new URLSearchParams();
-  params.set("price",total);
-  params.set("model",state.model);
-  params.set("opis",state.opis);
-  params.set("print",state.print.value);
-  params.set("laminacia",state.laminacia.value);
-  setTimeout(()=>location.href=RETURN_URL+"?"+params.toString(),500);
-}
-$("#confirm").addEventListener("click",confirmFlow);
-document.querySelectorAll(".step").forEach(step=>{
-  step.addEventListener("click",()=>{
-    const id=step.dataset.step;
-    if(id==="1")window.scrollTo({top:0,behavior:"smooth"});
-    if(id==="2")document.querySelector("#model").scrollIntoView({behavior:"smooth"});
-    if(id==="3")document.querySelector("#g-print").scrollIntoView({behavior:"smooth"});
-    if(id==="4")document.querySelector(".summary").scrollIntoView({behavior:"smooth"});
-    document.querySelectorAll(".step").forEach(s=>s.classList.remove("is-on"));
-    step.classList.add("is-on");
-  });
-});
-document.addEventListener("DOMContentLoaded",()=>{setTimeout(()=>document.getElementById("sr-splash")?.remove(),5000);recompute();});
 })();
 </script>
 </body>
